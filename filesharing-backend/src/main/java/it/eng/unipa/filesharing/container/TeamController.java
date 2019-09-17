@@ -52,7 +52,4 @@ public class TeamController {
 	public void delete(@PathVariable("uuid")UUID uuid,@PathVariable("recursive")Boolean recursive){
 		teamService.delete(uuid,recursive);
 	}
-	
-	
-	
 }
