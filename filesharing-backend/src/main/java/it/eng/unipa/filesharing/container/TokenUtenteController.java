@@ -22,7 +22,6 @@ public class TokenUtenteController {
     public void save(@PathVariable("email")String email){
         TokenUtenteDTO tokenUtenteDTO = new tokenUtenteDTO();
         tokenUtenteDTO.setEmail(email);
-        tokenUtenteService.crateToken(tokenUtenteDTO);
-        tokenUtenteService.save(tokenUtenteDTO);
+        tokenUtenteService.save(tokenUtenteService.crateToken(tokenUtenteDTO));
     }
 }

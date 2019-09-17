@@ -7,7 +7,7 @@ import java.util.List;
 public interface TokenUtenteService {
     List<TokenUtenteDTO> utentiRichiestaNotifiche();
 
-    void crateToken(TokenUtenteDTO tokenUtenteDTO);
+    TokenUtenteDTO crateToken(TokenUtenteDTO tokenUtenteDTO);
 
     String getToken(String email);
 
