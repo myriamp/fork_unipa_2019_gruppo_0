@@ -2,11 +2,11 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
+      <module fileurl="file://$PROJECT_DIR$/filesharing.iml" filepath="$PROJECT_DIR$/filesharing.iml" />
       <module fileurl="file://$PROJECT_DIR$/filesharing-backend/filesharing-backend.iml" filepath="$PROJECT_DIR$/filesharing-backend/filesharing-backend.iml" />
       <module fileurl="file://$PROJECT_DIR$/filesharing-frontend/filesharing-frontend.iml" filepath="$PROJECT_DIR$/filesharing-frontend/filesharing-frontend.iml" />
       <module fileurl="file://$PROJECT_DIR$/filesharing-resource/filesharing-resource.iml" filepath="$PROJECT_DIR$/filesharing-resource/filesharing-resource.iml" />
       <module fileurl="file://$PROJECT_DIR$/filesharing-resource-filesystem/filesharing-resource-filesystem.iml" filepath="$PROJECT_DIR$/filesharing-resource-filesystem/filesharing-resource-filesystem.iml" />
-      <module fileurl="file://$PROJECT_DIR$/.idea/fork_unipa_2019_gruppo_0.iml" filepath="$PROJECT_DIR$/.idea/fork_unipa_2019_gruppo_0.iml" />
     </modules>
   </component>
 </project>

@@ -12,11 +12,11 @@
       </profile>
     </annotationProcessing>
     <bytecodeTargetLevel>
+      <module name="filesharing" target="1.8" />
       <module name="filesharing-backend" target="1.8" />
       <module name="filesharing-frontend" target="1.8" />
       <module name="filesharing-resource" target="1.8" />
       <module name="filesharing-resource-filesystem" target="1.8" />
-      <module name="fork_unipa_2019_gruppo_0" target="1.8" />
     </bytecodeTargetLevel>
   </component>
   <component name="JavacSettings">
