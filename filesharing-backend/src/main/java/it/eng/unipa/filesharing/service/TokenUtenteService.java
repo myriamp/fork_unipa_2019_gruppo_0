@@ -5,7 +5,6 @@ import it.eng.unipa.filesharing.dto.TokenUtenteDTO;
 import java.util.List;
 
 public interface TokenUtenteService {
-    List<TokenUtenteDTO> utentiNotificheAbilitate();
     List<TokenUtenteDTO> utentiRichiestaNotifiche();
 
     void crateToken(TokenUtenteDTO tokenUtenteDTO);
