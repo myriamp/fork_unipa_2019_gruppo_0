@@ -20,6 +20,8 @@ import { RegistrationComponent } from './views/registration/registration.compone
 import { LoginComponent } from './views/login/login.component';
 import { TeamsComponent } from './views/teams/teams.component';
 import { TeamDialogComponent } from './dialog/team-dialog/team-dialog.component';
+import { NotificationsDialogComponent } from './dialog/notifications-dialog/notifications-dialog.component';
+import { NotificationsOffDialogComponent } from './dialog/notifications-off-dialog/notifications-off-dialog.component';
 import {FormsModule, ReactiveFormsModule} from "@angular/forms";
 import { BucketDialogComponent } from './dialog/bucket-dialog/bucket-dialog.component';
 import { BucketsComponent } from './views/buckets/buckets.component';
@@ -41,6 +43,8 @@ import { MemberPipe } from './pipe/member.pipe';
     LoginComponent,
     TeamsComponent,
     TeamDialogComponent,
+      NotificationsDialogComponent,
+      NotificationsOffDialogComponent,
     BucketDialogComponent,
     BucketsComponent,
     BucketDetailComponent,
@@ -77,7 +81,9 @@ import { MemberPipe } from './pipe/member.pipe';
   entryComponents:[
     TeamDialogComponent,
     BucketDialogComponent,
-    FolderDialogComponent
+    FolderDialogComponent,
+      NotificationsDialogComponent,
+      NotificationsOffDialogComponent
   ],
   bootstrap: [AppComponent]
 })
