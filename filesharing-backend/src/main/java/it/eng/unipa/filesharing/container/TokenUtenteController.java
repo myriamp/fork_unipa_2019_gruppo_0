@@ -20,8 +20,8 @@ public class TokenUtenteController {
     @GetMapping("/{email}")
     @ResponseStatus(value = HttpStatus.CREATED)
     public void save(@PathVariable("email")String email){
-        TokenUtenteDTO tokenUtenteDTO = new tokenUtenteDTO();
+        TokenUtenteDTO tokenUtenteDTO = new TokenUtenteDTO();
         tokenUtenteDTO.setEmail(email);
-        tokenUtenteService.save(tokenUtenteService.crateToken(tokenUtenteDTO));
+        tokenUtenteService.addToken(tokenUtenteDTO);
     }
 }

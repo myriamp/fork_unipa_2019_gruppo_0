@@ -10,6 +10,8 @@ import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.security.SecureRandom;
+import java.util.List;
+import java.util.Optional;
 
 @Service
 @Transactional(propagation = Propagation.REQUIRES_NEW)
@@ -25,29 +27,81 @@ public class TokenUtenteImpl implements TokenUtenteService {
     }
 
     @Override
-    public TokenUtenteDTO crateToken(TokenUtenteDTO tokenUtenteDTO){
-        SecureRandom token = new SecureRandom();
-        long longToken = Math.abs(token.nextLong());
-        String token = Long.toString(longToken,16);
-        tokenUtenteDTO.setToken(token);
+    public void addToken(TokenUtenteDTO tokenUtenteDTO){//richiamato dal controller , genera il token e lo aggiunge al dto
+        String email = tokenUtenteDTO.getEmail();
 
-        return tokenUtenteDTO
+        Optional<TokenUtente> findById = tokenUtenteRepository.findById(email);
+        if(!findById.isPresent()){
+            SecureRandom token = new SecureRandom();
+            long longToken = Math.abs(token.nextLong());
+            String codice = Long.toString(longToken,16);
+
+            TokenUtente newToken = new TokenUtente(email, codice);
+
+            tokenUtenteRepository.save(newToken);
+
+        }
+    }
+
+    public String getToken(String email){//ritorna il token relativo a una email per mostrarla a video e poi inserirla su telegram
+        Optional<TokenUtente> findById = tokenUtenteRepository.findById(email);
+        if(findById.isPresent()){
+                TokenUtente token = findById.get();
+
+                String codice = token.getToken();
+
+                return codice;
+        }
+        return "email non presente";
     }
 
     @Override
-    public String getToken(String email){
-        TokenUtente tokenUtente = tokenUtente(email);
+    public void insertChatID(  String chatID, String token ){//faccio il delete e ricarico nella repository
+        //con il cambio chatid aggiunto
 
-        return conversionService.convert(tokenUtente, String.class);
+
+
+        List<TokenUtente> findByToken = tokenUtenteRepository.findAll();
+        for (TokenUtente temp : findByToken){
+            if (temp.getToken().equals(token)){//cerchiamo il corrispondente di quel token , lo  eliminiamo e lo
+                //reinseriamo con il chat id
+                int index = findByToken.indexOf(temp);
+                TokenUtente prova = findByToken.get(index);
+                tokenUtenteRepository.delete(prova);
+
+                TokenUtente newToken = new TokenUtente(prova.getEmail(), token,chatID);
+
+                tokenUtenteRepository.save(newToken);//agggiunto con il relativo idChat
+
+            }
+
+
+        }
+
+
+
+
+
     }
 
     @Override
-    public  boolean verfifyToken(String token){
+    public  boolean verifyToken(String token){//Richiamato per verificare se il token nserito su telegram e' presente nella
+        //repository
+
+        List<TokenUtente> findBy = tokenUtenteRepository.findAll();
+
+        for (TokenUtente temp : findBy){
+            if (temp.getToken().equals(token)){
+                return true;
+            }
+            else{
+                return false;
+            }
+
+        }
+        return false;
 
     }
 
-    @Override
-    public String save(TokenUtenteDTO tokenUtenteDTO){
 
-    }
 }

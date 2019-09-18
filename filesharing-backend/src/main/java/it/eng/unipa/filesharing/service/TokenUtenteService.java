@@ -6,12 +6,14 @@ import java.util.List;
 
 public interface TokenUtenteService {
 
-    TokenUtenteDTO crateToken(TokenUtenteDTO tokenUtenteDTO);
+    void addToken(TokenUtenteDTO tokenUtenteDTO);
+
+    void insertChatID( String chatID, String token );
 
     String getToken(String email);
 
-    boolean verfifyToken(String token);
+    boolean verifyToken(String token);
 
-    String save(TokenUtenteDTO tokenUtenteDTO);
+
 
 }
