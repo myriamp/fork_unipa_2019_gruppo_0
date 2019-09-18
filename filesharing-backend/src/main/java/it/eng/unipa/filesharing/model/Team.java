@@ -110,6 +110,7 @@ public class Team {
 			Optional<Bucket> findFirst = this.buckets.stream().filter((t)->t.getName().equals(bucketName)).findFirst();
 			if(findFirst.isPresent()) {
 				return this.buckets.remove(findFirst.get());
+
 			}else {
 				return false;
 			}

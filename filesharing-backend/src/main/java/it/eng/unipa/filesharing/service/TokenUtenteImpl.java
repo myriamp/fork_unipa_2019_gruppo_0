@@ -10,6 +10,7 @@ import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.security.SecureRandom;
+import java.util.Optional;
 
 @Service
 @Transactional(propagation = Propagation.REQUIRES_NEW)
@@ -25,24 +26,45 @@ public class TokenUtenteImpl implements TokenUtenteService {
     }
 
     @Override
-    public TokenUtenteDTO crateToken(TokenUtenteDTO tokenUtenteDTO){
-        SecureRandom token = new SecureRandom();
-        long longToken = Math.abs(token.nextLong());
-        String token = Long.toString(longToken,16);
-        tokenUtenteDTO.setToken(token);
+    public void addToken(TokenUtenteDTO tokenUtenteDTO){//richiamato dal controller , genera il token e lo aggiunge al dto
+        String email = tokenUtenteDTO.getEmail();
 
-        return tokenUtenteDTO
+        Optional<TokenUtente> findById = tokenUtenteRepository.findById(email);
+        if(findById.isPresent() == false ){
+            SecureRandom token = new SecureRandom();
+            long longToken = Math.abs(token.nextLong());
+            String token = Long.toString(longToken,16);
+
+            TokenUtente newToken = new TokenUtente(email, token);
+
+            tokenUtenteRepository.save(newToken);
+
+        }
+    }
+
+    public String getToken(String email){//ritorna il token relativo a una email per mostrarla a video e poi inserirla su telegram
+        Optional<TokenUtente> findById = tokenUtenteRepository.findById(email);
+        if(findById.isPresent() == true ){
+                TokenUtente token = findById.get();
+
+                String codice = token.getToken();
+        }
     }
 
     @Override
-    public String getToken(String email){
-        TokenUtente tokenUtente = tokenUtente(email);
+    public TokenUtenteDTO insertChatID(TokenUtenteDTO tokenUtenteDTO, String chatID ){
+        tokenUtenteDTO.setIdTelegram(chatID);
 
-        return conversionService.convert(tokenUtente, String.class);
     }
 
     @Override
-    public  boolean verfifyToken(String token){
+    public  boolean verifyToken(String token){//Richiamato per verificare se il token nserito su telegram e' presente nella
+        //repository
+
+        Optional<TokenUtente> findBy = tokenUtenteRepository.findAll();
+
+
+
 
     }
 

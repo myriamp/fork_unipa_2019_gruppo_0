@@ -6,7 +6,9 @@ import java.util.List;
 
 public interface TokenUtenteService {
 
-    TokenUtenteDTO crateToken(TokenUtenteDTO tokenUtenteDTO);
+    TokenUtenteDTO addToken(TokenUtenteDTO tokenUtenteDTO);
+
+    TokenUtenteDTO insertChatID(TokenUtenteDTO tokenUtenteDTO, String chatID );
 
     String getToken(String email);
 

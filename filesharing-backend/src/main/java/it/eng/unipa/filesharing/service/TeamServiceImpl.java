@@ -104,6 +104,7 @@ public class TeamServiceImpl implements TeamService{
 		Optional<Team> findById = teamRepository.findById(uuid);
 		if(findById.isPresent() ){
 			Team team = findById.get();
+
 			boolean esito = team.removeMember(SecurityContext.getEmail(), otherEmail);
 		}
 	}
