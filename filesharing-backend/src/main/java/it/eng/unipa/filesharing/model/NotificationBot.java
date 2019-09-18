@@ -1,27 +1,44 @@
 package it.eng.unipa.filesharing.container;
 
+import com.google.common.primitives.UnsignedInteger;
+import it.eng.unipa.filesharing.service.TokenUtenteImpl;
+import it.eng.unipa.filesharing.service.TokenUtenteService;
 import org.telegram.telegrambots.ApiContextInitializer;
 import org.telegram.telegrambots.bots.TelegramLongPollingBot;
 import org.telegram.telegrambots.meta.TelegramBotsApi;
 import org.telegram.telegrambots.meta.api.methods.send.SendMessage;
 import org.telegram.telegrambots.meta.api.objects.Update;
 import org.telegram.telegrambots.meta.exceptions.TelegramApiException;
+
+
 import java.security.SecureRandom;
 
-public class NotificationBot extends TelegramLongPollingBot {
-    SecureRandom random = new SecureRandom();
-    public  synchronized void onUpdateReceived(Update update) {
-        //System.out.println(update.getMessage().getText() +"  " + update.getMessage().getChatId());
-        //System.out.println(update.getMessage().getChatId());
 
+public class NotificationBot extends TelegramLongPollingBot {
+    TokenUtenteService tokenUtenteService ;
+
+    SecureRandom random = new SecureRandom();
+
+
+
+    public  synchronized void onUpdateReceived(Update update) {
         String command = update.getMessage().getText();
         SendMessage message = new SendMessage();
 
-        if (command.equals("/token")){
+        if (command.length() == 8 ){//se inserisce nella chat un messaggio di 8 caratteri
+            //controlla che sia un token (valido)
+            //il token viene generato in AddToken
 
-            long longToken = Math.abs(random.nextLong());
-            String random = Long.toString(longToken,16);
-            message.setText("Ti sto generando un Token Accesso "+ random );
+            boolean verifica = tokenUtenteService.verifyToken(update.getMessage().getText());
+
+            if(verifica == true ){
+                //ha trovato il token nella repository, aggiungiamo il chat id alla tabella
+                String chatid = Long.toString(update.getMessage().getChatId());
+                tokenUtenteService.insertChatID(chatid,update.getMessage().getText());
+                message.setText("Da adesso hai accesso alle notifiche");
+
+            }
+
 
         }
 
@@ -29,6 +46,11 @@ public class NotificationBot extends TelegramLongPollingBot {
 
 
             message.setText("Il tuo ChatId : "+ update.getMessage().getChatId());
+
+        }
+
+        else if (command.equals("/start")){
+            message.setText("Ciao Quokki, inserisci il token come richiesto il Descrizione");
 
         }
 
@@ -62,6 +84,7 @@ public class NotificationBot extends TelegramLongPollingBot {
                 logger.error("Failed to send message \"{}\" to {} due to error: {}", text, chatId, e.getMessage());
             }
         } */
+
 
 
     //@Override

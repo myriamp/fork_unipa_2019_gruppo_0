@@ -106,6 +106,7 @@ public class TeamServiceImpl implements TeamService{
 			Team team = findById.get();
 
 			boolean esito = team.removeMember(SecurityContext.getEmail(), otherEmail);
+
 		}
 	}
 	
