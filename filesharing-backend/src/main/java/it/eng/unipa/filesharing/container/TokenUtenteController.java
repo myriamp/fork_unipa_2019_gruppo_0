@@ -17,7 +17,7 @@ public class TokenUtenteController {
     }
 
     //crea token e lo salva insieme alla mail
-    @PutMapping("/{email}")
+    @GetMapping("/{email}")
     @ResponseStatus(value = HttpStatus.CREATED)
     public void save(@PathVariable("email")String email){
         TokenUtenteDTO tokenUtenteDTO = new tokenUtenteDTO();

@@ -9,7 +9,7 @@ import org.springframework.stereotype.Repository;
 import java.util.List;
 
 @Repository
-public interface TokenUtenteRepository extends JpaRepository<TokenUtente>{
+public interface TokenUtenteRepository extends JpaRepository<TokenUtente, String>{
     @Query("select tu from TokenUtente tu ")
     List<TokenUtente> utentiRichiestaNotifiche(@Param("email")String email);
 }
