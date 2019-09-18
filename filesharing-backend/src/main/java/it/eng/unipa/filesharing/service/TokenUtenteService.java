@@ -5,7 +5,6 @@ import it.eng.unipa.filesharing.dto.TokenUtenteDTO;
 import java.util.List;
 
 public interface TokenUtenteService {
-    List<TokenUtenteDTO> utentiRichiestaNotifiche();
 
     TokenUtenteDTO crateToken(TokenUtenteDTO tokenUtenteDTO);
 
@@ -14,4 +13,5 @@ public interface TokenUtenteService {
     boolean verfifyToken(String token);
 
     String save(TokenUtenteDTO tokenUtenteDTO);
+
 }
