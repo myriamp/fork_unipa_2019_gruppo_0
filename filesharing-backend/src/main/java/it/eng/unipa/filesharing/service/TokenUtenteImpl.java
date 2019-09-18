@@ -15,7 +15,7 @@ import java.security.SecureRandom;
 @Transactional(propagation = Propagation.REQUIRES_NEW)
 public class TokenUtenteImpl implements TokenUtenteService {
 
-    private TokenUtenteRepository tokenUtenteRepository;9
+    private TokenUtenteRepository tokenUtenteRepository;
 
     private ConversionService conversionService;
 
