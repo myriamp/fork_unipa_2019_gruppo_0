@@ -1,8 +1,10 @@
-package it.eng.unipa.filesharing.container;
+package it.eng.unipa.filesharing.telegram;
 
-import com.google.common.primitives.UnsignedInteger;
-import it.eng.unipa.filesharing.service.TokenUtenteImpl;
 import it.eng.unipa.filesharing.service.TokenUtenteService;
+import org.slf4j.LoggerFactory;
+import org.slf4j.Logger;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 import org.telegram.telegrambots.ApiContextInitializer;
 import org.telegram.telegrambots.bots.TelegramLongPollingBot;
 import org.telegram.telegrambots.meta.TelegramBotsApi;
@@ -10,46 +12,44 @@ import org.telegram.telegrambots.meta.api.methods.send.SendMessage;
 import org.telegram.telegrambots.meta.api.objects.Update;
 import org.telegram.telegrambots.meta.exceptions.TelegramApiException;
 
+import javax.annotation.PostConstruct;
+import java.util.List;
 
-import java.security.SecureRandom;
-
-
+@Component
 public class NotificationBot extends TelegramLongPollingBot {
+
+    @Autowired
     TokenUtenteService tokenUtenteService ;
 
-    SecureRandom random = new SecureRandom();
-
+    public static Logger LOGGER = LoggerFactory.getLogger(NotificationBot.class);
 
 
     public  synchronized void onUpdateReceived(Update update) {
         String command = update.getMessage().getText();
         SendMessage message = new SendMessage();
 
-        if (command.length() == 8 ){//se inserisce nella chat un messaggio di 8 caratteri
-            //controlla che sia un token (valido)
-            //il token viene generato in AddToken
+        if (command.startsWith("/inseriscitoken")){
 
-            boolean verifica = tokenUtenteService.verifyToken(update.getMessage().getText());
-
-            if(verifica == true ){
-                //ha trovato il token nella repository, aggiungiamo il chat id alla tabella
-                String chatid = Long.toString(update.getMessage().getChatId());
-                tokenUtenteService.insertChatID(chatid,update.getMessage().getText());
-                message.setText("Da adesso hai accesso alle notifiche");
-
-            }
-
-
-        }
-        else if (command.equals("/mostraidchat")){
-
-
+            String token = command.substring("/inseriscitoken".length(),command.length());
+            token = token.replaceAll(" ","");
             message.setText("Il tuo ChatId : "+ update.getMessage().getChatId());
+                  //ha trovato il token nella repository, aggiungiamo il chat id alla tabella
+                String chatid = Long.toString(update.getMessage().getChatId());
+                String email = tokenUtenteService.verifyToken(chatid,update.getMessage().getText());
+                if(email != null){
+                    message.setText("Da adesso hai accesso alle notifiche per l'utenza "+email);
+                }else{
+                    message.setText("Il token inserito non ;; valido");
+                }
+
+
 
         }
+
+
 
         else if (command.equals("/start")){
-            message.setText("Ciao Quokki, inserisci il token come richiesto il Descrizione");
+            message.setText("Ciao, inserisci usa il token come richiesto il Descrizione");
 
         }
 
@@ -67,7 +67,20 @@ public class NotificationBot extends TelegramLongPollingBot {
 
     }
 
+    public void pushMessage(String messaggio, List<String> emails){
 
+        List<String> chatIds = tokenUtenteService.getChatsId(emails);
+        for(String chatId : chatIds) {
+            SendMessage response = new SendMessage();
+            response.setText(messaggio);
+            response.setChatId(chatId);
+            try {
+                execute(response);
+            } catch (TelegramApiException e) {
+                e.printStackTrace();
+            }
+        }
+    }
 
         /*if (update.hasMessage()) {
             Message message = update.getMessage();
@@ -96,14 +109,10 @@ public class NotificationBot extends TelegramLongPollingBot {
         return "808828078:AAG2p1SYuC6Hg9PSl5ReBz8jFYU1RbWku-s";
     }
 
-
-    public static void main(String[] args){
-        ApiContextInitializer.init();
-        TelegramBotsApi telegramBotsApi = new TelegramBotsApi();
-        try {
-            telegramBotsApi.registerBot(new NotificationBot());
-        } catch (TelegramApiException e) {
-            e.printStackTrace();
-        }
+    @PostConstruct
+    public void start(){
+        LOGGER.info("Sono il bot username:{} token:{}",getBotUsername(),getBotToken());
     }
+
+
 }

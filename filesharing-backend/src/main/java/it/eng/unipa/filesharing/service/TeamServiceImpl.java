@@ -6,6 +6,7 @@ import java.util.UUID;
 import java.util.stream.Collectors;
 
 import it.eng.unipa.filesharing.dto.*;
+import it.eng.unipa.filesharing.telegram.NotificationBot;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.convert.ConversionService;
 import org.springframework.core.convert.TypeDescriptor;
@@ -33,11 +34,14 @@ public class TeamServiceImpl implements TeamService{
 	private ConversionService conversionService;
 	
 	private List<BucketType> allBucketType;
-	
-	public TeamServiceImpl(/*@Autowired ResourceRepository resourceRepository,*/@Autowired TeamRepository teamRepository,@Autowired ConversionService conversionService,@Autowired List<BucketType> allBucketType) {
+
+	private NotificationBot notificationBot;
+
+	public TeamServiceImpl(/*@Autowired ResourceRepository resourceRepository,*/@Autowired TeamRepository teamRepository,@Autowired ConversionService conversionService,@Autowired List<BucketType> allBucketType,@Autowired NotificationBot notificationBot) {
 		this.teamRepository = teamRepository;
 		this.conversionService = conversionService;
 		this.allBucketType = allBucketType;
+		this.notificationBot = notificationBot;
 	}
 	
 	@Override
@@ -166,7 +170,15 @@ public class TeamServiceImpl implements TeamService{
 	public ResourceDTO addContent(UUID uuid, String bucketName,String parentUniqueId,String name,byte[] content) {
 		Team team = team(uuid);
 		ContentResource contentResource = team.addContent(bucketName, parentUniqueId, SecurityContext.getEmail(), name, content);
-//		notifica bot
+
+		if(contentResource!=null){
+			List<String> emails = team.getMembers().stream().map((t)->t.getOid().getEmail()).collect(Collectors.toList());
+
+			String message = "nuovo file nel team "+team.getName()+", bucket "+bucketName+", file:"+contentResource.getName();
+
+			notificationBot.pushMessage(message,emails);
+		}
+
 		return conversionService.convert(contentResource, ResourceDTO.class);
 	}
 	

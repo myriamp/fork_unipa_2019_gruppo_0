@@ -50,64 +50,28 @@ public class TokenUtenteImpl implements TokenUtenteService {
         return tokenUtenteDTO;
     }
 
-    public String getToken(String email){//ritorna il token relativo a una email per mostrarla a video e poi inserirla su telegram
-        Optional<TokenUtente> findById = tokenUtenteRepository.findById(email);
-        if(findById.isPresent()){
-                TokenUtente token = findById.get();
-
-                String codice = token.getToken();
-
-                return codice;
-        }
-        return "email non presente";
-    }
-
     @Override
-    public void insertChatID(  String chatID, String token ){//faccio il delete e ricarico nella repository
+    public String verifyToken(  String token,String chatID ){//faccio il delete e ricarico nella repository
         //con il cambio chatid aggiunto
 
 
 
-        List<TokenUtente> findByToken = tokenUtenteRepository.findAll();
-        for (TokenUtente temp : findByToken){
-            if (temp.getToken().equals(token)){//cerchiamo il corrispondente di quel token , lo  eliminiamo e lo
-                //reinseriamo con il chat id
-                int index = findByToken.indexOf(temp);
-                TokenUtente prova = findByToken.get(index);
-                tokenUtenteRepository.delete(prova);
-
-                TokenUtente newToken = new TokenUtente(prova.getEmail(), token,chatID);
-
-                tokenUtenteRepository.save(newToken);//agggiunto con il relativo idChat
-
+        Optional<TokenUtente> opt= tokenUtenteRepository.utentiRichiestaNotifiche(token);
+        if(opt.isPresent() && opt.get().getIdTelegram()==null){
+        TokenUtente tokenUtente = opt.get();
+        tokenUtente.setIdTelegram(chatID);
+        tokenUtenteRepository.save(tokenUtente);//agggiunto con il relativo idChat
+        return tokenUtente.getEmail();
             }
+
+        return null;
 
 
         }
-
-
-
-
-
-    }
 
     @Override
-    public  boolean verifyToken(String token){//Richiamato per verificare se il token nserito su telegram e' presente nella
-        //repository
-
-        List<TokenUtente> findBy = tokenUtenteRepository.findAll();
-
-        for (TokenUtente temp : findBy){
-            if (temp.getToken().equals(token)){
-                return true;
-            }
-            else{
-                return false;
-            }
-
-        }
-        return false;
-
+    public List<String> getChatsId(List<String> emails) {
+        return null;
     }
 
     @Override
