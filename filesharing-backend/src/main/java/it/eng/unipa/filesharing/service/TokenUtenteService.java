@@ -8,11 +8,9 @@ public interface TokenUtenteService {
 
     TokenUtenteDTO addToken();
 
-    void insertChatID( String chatID, String token );
+    String verifyToken(String token,String chatId);
 
-    String getToken(String email);
-
-    boolean verifyToken(String token);
+    List<String> getChatsId(List<String> emails);
 
 
 

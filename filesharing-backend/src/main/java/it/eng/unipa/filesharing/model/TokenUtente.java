@@ -39,4 +39,8 @@ public class TokenUtente {
     public String getIdTelegram() {
         return idTelegram;
     }
+
+    public void setIdTelegram(String idTelegram) {
+        this.idTelegram = idTelegram;
+    }
 }
