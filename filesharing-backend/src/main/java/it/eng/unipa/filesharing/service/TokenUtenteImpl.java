@@ -87,7 +87,14 @@ public class TokenUtenteImpl implements TokenUtenteService {
     }
 
     @Override
-    public String verificaChatId(String email){
-        return null;
+    public VerificaDTO verificaChatId(String email){
+        VerificaDTO verificaDTO = new VerificaDTO();
+        if(tokenUtenteRepository.verificaChatId(email) != null){
+            verificaDTO.setStatus(true);
+        }
+        else {
+            verificaDTO.setStatus(false);
+        }
+        return  verificaDTO;
     }
 }

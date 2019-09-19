@@ -33,8 +33,7 @@ public class TokenUtenteController {
     @ResponseStatus(value = HttpStatus.CREATED)
     public VerificaDTO checkStatus(){
 
-
-        return new VerificaDTO(++statusCount>4);
+        return tokenUtenteService.verificaChatId(SecurityContext.getEmail());
     }
 
     @DeleteMapping("")

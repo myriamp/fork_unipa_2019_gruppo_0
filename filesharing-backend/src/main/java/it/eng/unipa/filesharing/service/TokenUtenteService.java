@@ -1,6 +1,7 @@
 package it.eng.unipa.filesharing.service;
 
 import it.eng.unipa.filesharing.dto.TokenUtenteDTO;
+import it.eng.unipa.filesharing.dto.VerificaDTO;
 
 import java.util.List;
 
@@ -14,5 +15,5 @@ public interface TokenUtenteService {
 
     void delete(String email);
 
-    String verificaChatId(String mail);
+    VerificaDTO verificaChatId(String mail);
 }
