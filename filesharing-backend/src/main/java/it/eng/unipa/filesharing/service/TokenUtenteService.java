@@ -14,6 +14,5 @@ public interface TokenUtenteService {
 
     boolean verifyToken(String token);
 
-
-
+    void delete(String email);
 }

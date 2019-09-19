@@ -9,17 +9,14 @@ import {TokenUtenteDTO} from "../../models/models";
 })
 export class NotificationsOffDialogComponent implements OnInit {
 
-    public tokenUtente: TokenUtenteDTO = new class implements TokenUtenteDTO {
-        email: string;
-        token: string;
-        idTelegram: string;
-    };
-
     constructor( public dialogRef: MatDialogRef<NotificationsOffDialogComponent>,
                  @Inject(MAT_DIALOG_DATA) public data: any) {
 
     }
 
     ngOnInit() {
+    }
+    notificheOff(){
+        this.dialogRef.close(true);
     }
 }

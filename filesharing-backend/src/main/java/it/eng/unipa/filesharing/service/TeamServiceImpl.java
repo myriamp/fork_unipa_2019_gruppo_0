@@ -166,6 +166,7 @@ public class TeamServiceImpl implements TeamService{
 	public ResourceDTO addContent(UUID uuid, String bucketName,String parentUniqueId,String name,byte[] content) {
 		Team team = team(uuid);
 		ContentResource contentResource = team.addContent(bucketName, parentUniqueId, SecurityContext.getEmail(), name, content);
+//		notifica bot
 		return conversionService.convert(contentResource, ResourceDTO.class);
 	}
 	

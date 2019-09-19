@@ -12,4 +12,5 @@ import java.util.List;
 public interface TokenUtenteRepository extends JpaRepository<TokenUtente, String>{
     @Query("select tu from TokenUtente tu ")
     List<TokenUtente> utentiRichiestaNotifiche(@Param("email")String email);
+
 }

@@ -110,5 +110,12 @@ public class TokenUtenteImpl implements TokenUtenteService {
 
     }
 
-
+    @Override
+    public void delete(String email){
+        tokenUtenteRepository.delete(new TokenUtente(email));
+//        Optional<TokenUtente> t = tokenUtenteRepository.findById(email);
+//        if(t.isPresent()){
+//            t.get().getIdTelegram();
+//        }da fare nella funzione di verifica
+    }
 }
