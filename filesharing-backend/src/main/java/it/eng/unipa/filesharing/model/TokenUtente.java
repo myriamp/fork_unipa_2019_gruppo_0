@@ -16,7 +16,11 @@ public class TokenUtente {
     public TokenUtente() {
     }
 
-    public TokenUtente(String email,String token,String idTelegram) {
+    public TokenUtente(String email) {
+        this.email = email;
+    }
+
+    public TokenUtente(String email, String token, String idTelegram) {
         this.email = email;
         this.token = token;
         this.idTelegram = idTelegram;

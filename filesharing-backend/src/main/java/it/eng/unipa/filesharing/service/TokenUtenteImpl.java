@@ -73,4 +73,13 @@ public class TokenUtenteImpl implements TokenUtenteService {
     public List<String> getChatsId(List<String> emails) {
         return null;
     }
+
+    @Override
+    public void delete(String email){
+        tokenUtenteRepository.delete(new TokenUtente(email));
+//        Optional<TokenUtente> t = tokenUtenteRepository.findById(email);
+//        if(t.isPresent()){
+//            t.get().getIdTelegram();
+//        }da fare nella funzione di verifica
+    }
 }

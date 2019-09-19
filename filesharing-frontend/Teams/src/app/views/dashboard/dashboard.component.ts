@@ -14,6 +14,7 @@ import {NotificationsDialogComponent} from "../../dialog/notifications-dialog/no
 import {NotificationsOffDialogComponent} from "../../dialog/notifications-off-dialog/notifications-off-dialog.component";
 import {TokenUtenteService} from "../../services/token-utente.service";
 import {TokenUtente} from "../../models/TokenUtente";
+import {Verifica} from "../../models/Verifica";
 
 @Component({
   selector: 'app-dashboard',
@@ -29,6 +30,8 @@ export class DashboardComponent implements OnInit {
   public team: string;
   public bucket: string;
 
+  private statoAttivazione: boolean = false;
+
   private urlparams: UrlSegment[];
 
   constructor(public dialog: MatDialog,
@@ -41,6 +44,7 @@ export class DashboardComponent implements OnInit {
               private tokenUtenteService: TokenUtenteService) { }
 
   ngOnInit() {
+      this.checkStatoAttivazione();
     // this.teams = this.teamService.getTeam();
     console.log(this.router.pathFromRoot);
     this.route.events.subscribe(data=>{
@@ -70,11 +74,20 @@ export class DashboardComponent implements OnInit {
 
   }
 
+  private checkStatoAttivazione(){
+      this.tokenUtenteService.checkStatus().subscribe((verifica: Verifica)=>{
+          this.statoAttivazione = verifica.status;
+      });
+  }
+
   openDialogNotificationsAdd(): void {
       this.tokenUtenteService.save().subscribe((token: TokenUtente) =>{
           const dialogRef = this.dialog.open(NotificationsDialogComponent, {
               width: '50vw',
               data: token
+          });
+          dialogRef.afterClosed().subscribe((data)=>{
+              this.checkStatoAttivazione();
           });
       });
 
@@ -85,6 +98,13 @@ export class DashboardComponent implements OnInit {
             width: '50vw',
             data: {}
         });
+        dialogRef.afterClosed().subscribe((result: boolean)=>{
+            if(result){
+                this.tokenUtenteService.notificheOff().subscribe(()=>{
+                    this.checkStatoAttivazione();
+                });
+            }
+        })
     }
 
   openDialogTeam(): void {

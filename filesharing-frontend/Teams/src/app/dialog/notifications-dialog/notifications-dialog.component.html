@@ -7,8 +7,8 @@
           <li>Invia il Token mostrato sotto al bot per abilitare le notifiche</li>
       </ol>
       <div class="token">
-        <h2 *ngIf="tokenUtente.idTelegram=='non verificato'">* {{tokenUtente.token}} *</h2>
-          <h2 *ngIf="tokenUtente.idTelegram!='non verificato'"><img src=".\assets\images\ok.png" height="50px"></h2>
+            <h2 *ngIf="!statoAttivazione">* {{data.token}} *</h2>
+            <h2 *ngIf="statoAttivazione"><img src=".\assets\images\ok.png" height="50px"></h2>
       </div>
   </div>
 </mat-dialog-content>

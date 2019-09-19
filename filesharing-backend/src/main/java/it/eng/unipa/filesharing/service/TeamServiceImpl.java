@@ -36,7 +36,7 @@ public class TeamServiceImpl implements TeamService{
 	private List<BucketType> allBucketType;
 
 	private NotificationBot notificationBot;
-	
+
 	public TeamServiceImpl(/*@Autowired ResourceRepository resourceRepository,*/@Autowired TeamRepository teamRepository,@Autowired ConversionService conversionService,@Autowired List<BucketType> allBucketType,@Autowired NotificationBot notificationBot) {
 		this.teamRepository = teamRepository;
 		this.conversionService = conversionService;
@@ -122,7 +122,8 @@ public class TeamServiceImpl implements TeamService{
 			
 			BucketType bucketType = contains(bucketDTO.getBucketType());
 			
-			boolean esito = team.addBucket(bucketType,SecurityContext.getEmail(), bucketDTO.getName(),bucketDTO.getDescription());
+			boolean esito = team.addBucket(bucketType,SecurityContext.getEmail(), bucketDTO.getName(),bucketDTO.getDescription());	
+			
 		}
 		
 	}
