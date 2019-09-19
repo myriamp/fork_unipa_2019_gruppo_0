@@ -10,6 +10,10 @@ import {BucketService} from "../../services/bucket.service";
 import {FolderDialogComponent} from "../../dialog/folder-dialog/folder-dialog.component";
 import {ResourceService} from "../../services/resource.service";
 import {SYNC_TYPE, SyncService} from "../../services/sync.service";
+import {NotificationsDialogComponent} from "../../dialog/notifications-dialog/notifications-dialog.component";
+import {NotificationsOffDialogComponent} from "../../dialog/notifications-off-dialog/notifications-off-dialog.component";
+import {TokenUtenteService} from "../../services/token-utente.service";
+import {TokenUtente} from "../../models/TokenUtente";
 
 @Component({
   selector: 'app-dashboard',
@@ -33,7 +37,8 @@ export class DashboardComponent implements OnInit {
               private resourceService: ResourceService,
               private syncService: SyncService,
               private router: ActivatedRoute,
-              private route: Router) { }
+              private route: Router,
+              private tokenUtenteService: TokenUtenteService) { }
 
   ngOnInit() {
     // this.teams = this.teamService.getTeam();
@@ -64,6 +69,23 @@ export class DashboardComponent implements OnInit {
       }
 
   }
+
+  openDialogNotificationsAdd(): void {
+      this.tokenUtenteService.save().subscribe((token: TokenUtente) =>{
+          const dialogRef = this.dialog.open(NotificationsDialogComponent, {
+              width: '50vw',
+              data: token
+          });
+      });
+
+  }
+
+  openDialogNotificationsOff(): void {
+        const dialogRef = this.dialog.open(NotificationsOffDialogComponent, {
+            width: '50vw',
+            data: {}
+        });
+    }
 
   openDialogTeam(): void {
     const dialogRef = this.dialog.open(TeamDialogComponent, {

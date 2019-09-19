@@ -48,4 +48,10 @@ export interface UserRoleDTO {
     active: boolean;
 }
 
+export interface TokenUtenteDTO {
+    email: string;
+    token: string;
+    idTelegram: string;
+}
+
 export type TYPE = "BUCKET" | "FOLDER" | "CONTENT";

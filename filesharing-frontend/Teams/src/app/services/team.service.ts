@@ -25,7 +25,7 @@ export class TeamService {
   }
 
   public getTeam(uuid: string) : Observable<TeamDTO>{
-    return this.httpClient.get<TeamDTO>(this.baseUrl+'/'+uuid);
+    return this.httpClient.get<TeamDTO>(this.baseUrl+'/' +uuid);
   }
 
   public save(team: TeamDTO){

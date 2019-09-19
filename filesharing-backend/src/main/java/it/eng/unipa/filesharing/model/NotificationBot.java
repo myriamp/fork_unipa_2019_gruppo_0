@@ -49,6 +49,15 @@ public class NotificationBot extends TelegramLongPollingBot {
                 message.setText("Da adesso hai accesso alle notifiche");
 
             }
+
+
+        }
+
+        else if (command.equals("/mostraidchat")){
+
+
+            message.setText("Il tuo ChatId : "+ update.getMessage().getChatId());
+
         }
 
         else if (command.equals("/start")){

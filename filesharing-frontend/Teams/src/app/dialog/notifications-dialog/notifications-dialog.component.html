@@ -1,0 +1,14 @@
+<mat-dialog-content>
+  <div class="notifiche">
+      <h1>Attiva Notifiche</h1>
+      <ol>
+          <li>Apri Telegram</li>
+          <li>Cerca @ProjNotificationBot</li>
+          <li>Invia il Token mostrato sotto al bot per abilitare le notifiche</li>
+      </ol>
+      <div class="token">
+        <h2 *ngIf="tokenUtente.idTelegram=='non verificato'">* {{tokenUtente.token}} *</h2>
+          <h2 *ngIf="tokenUtente.idTelegram!='non verificato'"><img src=".\assets\images\ok.png" height="50px"></h2>
+      </div>
+  </div>
+</mat-dialog-content>

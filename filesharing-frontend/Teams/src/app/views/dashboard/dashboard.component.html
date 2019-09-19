@@ -1,5 +1,11 @@
 <div class="toolbar">
   <div class="flex-spacer"></div>
+  <button (click)="openDialogNotificationsAdd()" ng-show="!controllaCorrispondenzaEmailIdChat(true/false)" matTooltipClass="tooltip" matTooltipPosition="left" [matTooltip]="'Ricevi Notifiche'" type="button" mat-stroked-button class="mat-elevation-z0">
+    <mat-icon>add_alert</mat-icon>
+  </button>
+  <button (click)="openDialogNotificationsOff()" ng-show="controllaCorrispondenzaEmailIdChat(true/false)" matTooltipClass="tooltip" matTooltipPosition="left" [matTooltip]="'Disattiva Notifiche'" type="button" mat-stroked-button class="mat-elevation-z0">
+    <mat-icon>notifications_off</mat-icon>
+  </button>
   <button type="button" mat-stroked-button class="mat-elevation-z0">
   <mat-icon>attachment</mat-icon>
   </button>

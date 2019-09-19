@@ -1,5 +1,6 @@
 package it.eng.unipa.filesharing.service;
 
+import it.eng.unipa.filesharing.context.SecurityContext;
 import it.eng.unipa.filesharing.dto.*;
 import it.eng.unipa.filesharing.model.TokenUtente;
 import it.eng.unipa.filesharing.repository.TokenUtenteRepository;
@@ -27,9 +28,9 @@ public class TokenUtenteImpl implements TokenUtenteService {
     }
 
     @Override
-    public void addToken(TokenUtenteDTO tokenUtenteDTO){//richiamato dal controller , genera il token e lo aggiunge al dto
-        String email = tokenUtenteDTO.getEmail();
-
+    public TokenUtenteDTO addToken(){//richiamato dal controller , genera il token e lo aggiunge al dto
+        String email = SecurityContext.getEmail();
+        TokenUtenteDTO tokenUtenteDTO = new TokenUtenteDTO();
         Optional<TokenUtente> findById = tokenUtenteRepository.findById(email);
         if(!findById.isPresent()){
             SecureRandom token = new SecureRandom();
@@ -40,7 +41,13 @@ public class TokenUtenteImpl implements TokenUtenteService {
 
             tokenUtenteRepository.save(newToken);
 
+            tokenUtenteDTO.setToken(codice);
+
+        }else{
+            tokenUtenteDTO.setToken(findById.get().getToken());
         }
+
+        return tokenUtenteDTO;
     }
 
     public String getToken(String email){//ritorna il token relativo a una email per mostrarla a video e poi inserirla su telegram
