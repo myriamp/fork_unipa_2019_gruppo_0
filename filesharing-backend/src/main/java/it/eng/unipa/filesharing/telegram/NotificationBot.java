@@ -35,7 +35,7 @@ public class NotificationBot extends TelegramLongPollingBot {
             message.setText("Il tuo ChatId : "+ update.getMessage().getChatId());
                   //ha trovato il token nella repository, aggiungiamo il chat id alla tabella
                 String chatid = Long.toString(update.getMessage().getChatId());
-                String email = tokenUtenteService.verifyToken(chatid,update.getMessage().getText());
+                String email = tokenUtenteService.verifyToken(token,chatid);
                 if(email != null){
                     message.setText("Da adesso hai accesso alle notifiche per l'utenza "+email);
                 }else{
