@@ -29,7 +29,6 @@ public class TokenUtente {
     public TokenUtente(String email,String token) {
         this.email = email;
         this.token = token;
-        this.idTelegram = "nullo";
     }
 
     public String getEmail() {

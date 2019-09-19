@@ -13,4 +13,6 @@ public interface TokenUtenteService {
     List<String> getChatsId(List<String> emails);
 
     void delete(String email);
+
+    String verificaChatId(String mail);
 }

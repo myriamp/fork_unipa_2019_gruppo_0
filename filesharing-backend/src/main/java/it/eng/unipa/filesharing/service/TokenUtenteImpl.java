@@ -34,8 +34,11 @@ public class TokenUtenteImpl implements TokenUtenteService {
         Optional<TokenUtente> findById = tokenUtenteRepository.findById(email);
         if(!findById.isPresent()){
             SecureRandom token = new SecureRandom();
-            long longToken = Math.abs(token.nextLong());
-            String codice = Long.toString(longToken,16);
+            int min = 100000;
+            int max = 999999;
+
+           int val = token.nextInt(max - min + 1) +min;
+            String codice = ""+val;
 
             TokenUtente newToken = new TokenUtente(email, codice);
 
@@ -71,7 +74,7 @@ public class TokenUtenteImpl implements TokenUtenteService {
 
     @Override
     public List<String> getChatsId(List<String> emails) {
-        return null;
+        return tokenUtenteRepository.getChatIds(emails);
     }
 
     @Override
@@ -81,5 +84,10 @@ public class TokenUtenteImpl implements TokenUtenteService {
 //        if(t.isPresent()){
 //            t.get().getIdTelegram();
 //        }da fare nella funzione di verifica
+    }
+
+    @Override
+    public String verificaChatId(String email){
+        return null;
     }
 }
