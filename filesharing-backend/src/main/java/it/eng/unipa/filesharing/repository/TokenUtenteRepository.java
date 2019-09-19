@@ -7,9 +7,11 @@ import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
+import java.util.Optional;
 
 @Repository
 public interface TokenUtenteRepository extends JpaRepository<TokenUtente, String>{
-    @Query("select tu from TokenUtente tu ")
-    List<TokenUtente> utentiRichiestaNotifiche(@Param("email")String email);
+
+    @Query("select tu from TokenUtente tu where tu.token=:token")
+    Optional<TokenUtente> utentiRichiestaNotifiche(@Param("token")String token);
 }

@@ -3,6 +3,8 @@ package it.eng.unipa.filesharing.container;
 import com.google.common.primitives.UnsignedInteger;
 import it.eng.unipa.filesharing.service.TokenUtenteImpl;
 import it.eng.unipa.filesharing.service.TokenUtenteService;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 import org.telegram.telegrambots.ApiContextInitializer;
 import org.telegram.telegrambots.bots.TelegramLongPollingBot;
 import org.telegram.telegrambots.meta.TelegramBotsApi;
@@ -13,12 +15,11 @@ import org.telegram.telegrambots.meta.exceptions.TelegramApiException;
 
 import java.security.SecureRandom;
 
-
+@Component
 public class NotificationBot extends TelegramLongPollingBot {
+
+    @Autowired
     TokenUtenteService tokenUtenteService ;
-
-    SecureRandom random = new SecureRandom();
-
 
 
     public  synchronized void onUpdateReceived(Update update) {
@@ -29,6 +30,16 @@ public class NotificationBot extends TelegramLongPollingBot {
             //controlla che sia un token (valido)
             //il token viene generato in AddToken
 
+
+
+
+        }
+
+        else if (command.startsWith("/inseriscitoken")){
+
+            String token = command.substring("/inseriscitoken".length(),command.length());
+            token = token.replaceAll(" ","");
+            message.setText("Il tuo ChatId : "+ update.getMessage().getChatId());
             boolean verifica = tokenUtenteService.verifyToken(update.getMessage().getText());
 
             if(verifica == true ){
@@ -38,19 +49,10 @@ public class NotificationBot extends TelegramLongPollingBot {
                 message.setText("Da adesso hai accesso alle notifiche");
 
             }
-
-
-        }
-
-        else if (command.equals("/mostraidchat")){
-
-
-            message.setText("Il tuo ChatId : "+ update.getMessage().getChatId());
-
         }
 
         else if (command.equals("/start")){
-            message.setText("Ciao Quokki, inserisci il token come richiesto il Descrizione");
+            message.setText("Ciao, inserisci usa il token come richiesto il Descrizione");
 
         }
 
