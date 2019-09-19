@@ -17,11 +17,11 @@ public class TokenUtenteController {
     }
 
     //crea token e lo salva insieme alla mail
-    @GetMapping("/{email}")
+    @GetMapping("")
     @ResponseStatus(value = HttpStatus.CREATED)
-    public void save(@PathVariable("email")String email){
-        TokenUtenteDTO tokenUtenteDTO = new TokenUtenteDTO();
-        tokenUtenteDTO.setEmail(email);
-        tokenUtenteService.addToken(tokenUtenteDTO);
+    public TokenUtenteDTO save(){
+
+        TokenUtenteDTO dto = tokenUtenteService.addToken();
+        return dto;
     }
 }

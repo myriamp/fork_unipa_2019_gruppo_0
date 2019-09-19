@@ -5,13 +5,15 @@ import {MatDialog} from "@angular/material";
 import {BucketDialogComponent} from "../../dialog/bucket-dialog/bucket-dialog.component";
 import {TeamService} from "../../services/team.service";
 import {ActivatedRoute, Params, Router, UrlSegment} from "@angular/router";
-import {BucketDTO, FolderDTO, TeamDTO, TokenUtenteDTO} from "../../models/models";
+import {BucketDTO, FolderDTO, TeamDTO} from "../../models/models";
 import {BucketService} from "../../services/bucket.service";
 import {FolderDialogComponent} from "../../dialog/folder-dialog/folder-dialog.component";
 import {ResourceService} from "../../services/resource.service";
 import {SYNC_TYPE, SyncService} from "../../services/sync.service";
 import {NotificationsDialogComponent} from "../../dialog/notifications-dialog/notifications-dialog.component";
 import {NotificationsOffDialogComponent} from "../../dialog/notifications-off-dialog/notifications-off-dialog.component";
+import {TokenUtenteService} from "../../services/token-utente.service";
+import {TokenUtente} from "../../models/TokenUtente";
 
 @Component({
   selector: 'app-dashboard',
@@ -35,7 +37,8 @@ export class DashboardComponent implements OnInit {
               private resourceService: ResourceService,
               private syncService: SyncService,
               private router: ActivatedRoute,
-              private route: Router) { }
+              private route: Router,
+              private tokenUtenteService: TokenUtenteService) { }
 
   ngOnInit() {
     // this.teams = this.teamService.getTeam();
@@ -68,11 +71,13 @@ export class DashboardComponent implements OnInit {
   }
 
   openDialogNotificationsAdd(): void {
-      const dialogRef = this.dialog.open(NotificationsDialogComponent, {
-          width: '50vw',
-          data: {}
+      this.tokenUtenteService.save().subscribe((token: TokenUtente) =>{
+          const dialogRef = this.dialog.open(NotificationsDialogComponent, {
+              width: '50vw',
+              data: token
+          });
       });
-      this.showMenu = false;
+
   }
 
   openDialogNotificationsOff(): void {
@@ -80,7 +85,6 @@ export class DashboardComponent implements OnInit {
             width: '50vw',
             data: {}
         });
-        this.showMenu = false;
     }
 
   openDialogTeam(): void {

@@ -41,7 +41,6 @@ public class NotificationBot extends TelegramLongPollingBot {
 
 
         }
-
         else if (command.equals("/mostraidchat")){
 
 

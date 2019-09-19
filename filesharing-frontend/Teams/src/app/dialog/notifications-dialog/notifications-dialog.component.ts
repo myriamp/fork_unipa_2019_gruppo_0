@@ -1,6 +1,7 @@
 import {Component, Inject, OnInit} from '@angular/core';
 import {MAT_DIALOG_DATA, MatDialogRef} from "@angular/material";
 import {TokenUtenteDTO} from "../../models/models";
+import {TokenUtente} from "../../models/TokenUtente";
 
 @Component({
     selector: 'app-bucket-dialog',
@@ -9,14 +10,8 @@ import {TokenUtenteDTO} from "../../models/models";
 })
 export class NotificationsDialogComponent implements OnInit {
 
-    public tokenUtente: TokenUtenteDTO = new class implements TokenUtenteDTO {
-        email: string;
-        token: string;
-        idTelegram: string;
-    };
-
     constructor( public dialogRef: MatDialogRef<NotificationsDialogComponent>,
-                 @Inject(MAT_DIALOG_DATA) public data: any) {
+                 @Inject(MAT_DIALOG_DATA) public data: TokenUtente) {
 
     }
 

@@ -13,9 +13,7 @@ public class TokenUtenteConverter implements Converter<TokenUtente, TokenUtenteD
         TokenUtenteDTO tokenUtenteDTO = null;
         if(tokenUtenteDTO !=null) {
             tokenUtenteDTO = new TokenUtenteDTO();
-            tokenUtenteDTO.setEmail(tokenUtente.getEmail());
             tokenUtenteDTO.setToken(tokenUtente.getToken());
-            tokenUtenteDTO.setIdTelegram(tokenUtente.getIdTelegram());
         }
         return tokenUtenteDTO;
     }
