@@ -50,8 +50,4 @@ public class BucketController {
 	public List<BucketTypeDTO> type() {
 		return teamService.bucketTypeSupport();
 	}
-	
-	
-	
-	
 }
