@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="DataSourceManagerImpl" format="xml" multifile-model="true">
-    <data-source source="LOCAL" name="fork_unipa_2019_gruppo_0" uuid="0d4db9f3-7905-40f6-8d89-e1c850033c45">
+    <data-source source="LOCAL" name="fork_unipa_2019_gruppo_0" uuid="b24396f8-0730-4582-8189-f90220ad410c">
       <driver-ref>h2.unified</driver-ref>
       <synchronize>true</synchronize>
       <jdbc-driver>org.h2.Driver</jdbc-driver>
-      <jdbc-url>jdbc:h2:file:C:\Users\chris\IdeaProjects\fork_unipa_2019_gruppo_0\fork_unipa_2019_gruppo_0;AUTO_SERVER=TRUE</jdbc-url>
+      <jdbc-url>jdbc:h2:file:C:\Users\Gabri\IdeaProjects\fork_unipa_2019_gruppo_0\fork_unipa_2019_gruppo_0;AUTO_SERVER=TRUE</jdbc-url>
     </data-source>
   </component>
 </project>
