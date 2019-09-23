@@ -174,7 +174,7 @@ public class TeamServiceImpl implements TeamService{
 		if(contentResource!=null){
 			List<String> emails = team.getMembers().stream().map((t)->t.getOid().getEmail()).collect(Collectors.toList());
 
-			String message = "nuovo file nel team "+team.getName()+", bucket "+bucketName+", file:"+contentResource.getName()+" caricato da "+SecurityContext.getLongName();
+			String message = "Nuova risorsa nel team: '"+ team.getName()+"', bucket: '"+bucketName+"'. \nFile: "+contentResource.getName()+" caricato da '"+SecurityContext.getLongName()+"'";
 
 			notificationBot.pushMessage(message,emails);
 		}
