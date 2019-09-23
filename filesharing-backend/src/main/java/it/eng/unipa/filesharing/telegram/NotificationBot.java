@@ -28,9 +28,9 @@ public class NotificationBot extends TelegramLongPollingBot {
         String command = update.getMessage().getText();
         SendMessage message = new SendMessage();
 
-        if (command.startsWith("/inseriscitoken")){
+        if (command.startsWith("/token")){
 
-            String token = command.substring("/inseriscitoken".length(),command.length());
+            String token = command.substring("/token".length(),command.length());
             token = token.replaceAll(" ","");
             message.setText("Il tuo ChatId : "+ update.getMessage().getChatId());
                   //ha trovato il token nella repository, aggiungiamo il chat id alla tabella
@@ -39,7 +39,7 @@ public class NotificationBot extends TelegramLongPollingBot {
                 if(email != null){
                     message.setText("Da adesso hai accesso alle notifiche per l'utenza "+email);
                 }else{
-                    message.setText("Il token inserito non ;; valido");
+                    message.setText("Token inserito non valido");
                 }
 
 
@@ -49,12 +49,12 @@ public class NotificationBot extends TelegramLongPollingBot {
 
 
         else if (command.equals("/start")){
-            message.setText("Ciao, inserisci usa il token come richiesto il Descrizione");
+            message.setText("Ciao, inserisci  il token come richiesto il Descrizione");
 
         }
 
         else{
-            message.setText("Mi Dispice non posso aiutarti, controllare lista comandi abilitati");
+            message.setText("Mi Dispiace non posso aiutarti, controllare lista comandi abilitati");
         }
 
         message.setChatId(update.getMessage().getChatId());

@@ -13,7 +13,9 @@ import java.util.Optional;
 public interface TokenUtenteRepository extends JpaRepository<TokenUtente, String>{
 
     @Query("select tu from TokenUtente tu where tu.token=:token")
-    Optional<TokenUtente> utentiRichiestaNotifiche(@Param("token")String token);
+    Optional<TokenUtente>
+
+    utentiRichiestaNotifiche(@Param("token")String token);
 
     @Query("select tu.idTelegram from TokenUtente tu where tu.email in (:emails) and tu.idTelegram is not null")
     List<String> getChatIds(@Param("emails") List<String> emails);
